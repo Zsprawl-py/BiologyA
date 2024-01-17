@@ -158,8 +158,17 @@ LOGIN_REDIRECT_URL = 'dashboard'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'account.authentication.EmailAuthBackend',]
+
+SERVER_EMAIL = 'noreply@asghartavana'
+DEFAULT_FROM_EMAIL = 'noreply@asghartavana'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'biostellar.edu@gmail.com'
+EMAIL_HOST_PASSWORD = 'oyhw tcyd dnbh nswx'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
