@@ -21,4 +21,9 @@ urlpatterns = [
     path('courses/', views.StudentCourseListView.as_view(), name='student_course_list'),
     path('course/<pk>/', views.StudentCourseDetailView.as_view(), name='student_course_detail'),
     path('course/<pk>/<module_id>/', views.StudentCourseDetailView.as_view(), name='student_course_detail_module'),
+    # email verificatino
+    path('verify-email/', views.verify_email, name='verify-email'),
+    path('verify-email/done/', views.verify_email_done, name='verify-email-done'),
+    path('verify-email-confirm/<uidb64>/<token>/', views.verify_email_confirm, name='verify-email-confirm'),
+    path('verify-email/complete/', views.verify_email_complete, name='verify-email-complete'),
     ]
