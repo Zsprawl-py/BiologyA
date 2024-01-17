@@ -13,6 +13,11 @@ from pathlib import Path
 import os
 import sys
 # import dj_database_url
+import environ
+
+# Initialise environment variables
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-trnr#o_oudwhw=qvs5*!@rmw!8kqdrvsf-)nq+)1s^z=7yznv$'
+SECRET_KEY = env('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -87,9 +92,9 @@ WSGI_APPLICATION = 'BiologyA.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'biology',
-        'USER': 'zsprawl',
-        'PASSWORD': 'HPM0ZS6VU8',
+        'NAME': env('DATABASE_NAME'),
+        'USER': env('DATABASE_USER'),
+        'PASSWORD': env('DATABASE_PASS'),
     }
 }
 # by digitalocean:
@@ -168,7 +173,7 @@ AUTHENTICATION_BACKENDS = [
 SERVER_EMAIL = 'noreply@asghartavana'
 DEFAULT_FROM_EMAIL = 'noreply@asghartavana'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'biostellar.edu@gmail.com'
-EMAIL_HOST_PASSWORD = 'oyhw tcyd dnbh nswx'
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True

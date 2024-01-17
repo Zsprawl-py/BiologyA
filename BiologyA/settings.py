@@ -21,7 +21,7 @@
 # # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 #
 # # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'django-insecure-trnr#o_oudwhw=qvs5*!@rmw!8kqdrvsf-)nq+)1s^z=7yznv$'
+
 #
 # # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
@@ -80,9 +80,7 @@
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'biology',
-#         'USER': 'zsprawl',
-#         'PASSWORD': 'HPM0ZS6VU8',
+
 #     }
 # }
 #
