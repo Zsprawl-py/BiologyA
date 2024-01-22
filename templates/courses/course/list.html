@@ -19,9 +19,11 @@
     <div class="contents">
         <h3>Subjects</h3>
         <ul id="modules">
+
             <li {% if not subject %}class="selected"{% endif %}>
                 <a href="{% url 'course_list' %}">All</a>
             </li>
+
             {% for s in subjects %}
                 <li {% if subject == s %}class="selected"{% endif %}>
                     <a href="{% url 'course_list_subject' s.slug %}">
@@ -33,6 +35,7 @@
                     </a>
                 </li>
             {% endfor %}
+
         </ul>
     </div>
     <div class="module">
