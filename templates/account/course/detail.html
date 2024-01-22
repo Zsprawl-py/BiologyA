@@ -8,6 +8,8 @@
     <h1>
         {{ module.title }}
     </h1>
+
+
     <div class="contents">
         <h3>Modules</h3>
         <ul id="modules">
@@ -26,6 +28,7 @@
             {% endfor %}
         </ul>
     </div>
+
     <div class="module">
         {% for content in module.contents.all %}
             {% with item=content.item %}
@@ -34,4 +37,5 @@
             {% endwith %}
         {% endfor %}
     </div>
+
 {% endblock %}

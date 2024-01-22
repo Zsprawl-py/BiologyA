@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Freelancer - Start Bootstrap Theme</title>
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+        <!-- Fonts CSS-->
+        <link rel="stylesheet" href="{% static 'css/heading.css' %}">
+        <link rel="stylesheet" href="{% static 'css/body.css' %}">
+    </head>
+    <body id="page-top">
+        <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
+            <div class="container"><a class="navbar-brand js-scroll-trigger" href="#page-top">BIOSTELLAR</a>
+                <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'course_list' %}">Courses</a>
+                        </li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">Articles</a>
+                        </li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">Roadmap</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        {% if user.is_authenticated %}
+                            <li class="nav-item mx-0 mx-lg-1">
+                                <a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'dashboard' %}">Hello {{ user }}</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item mx-0 mx-lg-1">
+                                <a class="btn btn-outline-light nav-link py-2 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'register' %}" role="button">Sign Up</a>
+                            </li>
+                            <li class="nav-item mx-0 mx-lg-1">
+                                <a class="btn btn-outline-light nav-link py-2 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'login' %}" role="button">Log in</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <main style="margin-top: 100px;">
+            <nav class="bg-primary flex-shrink-0 p-3">
+                <div class="pl-5 h3">
+                    {{ module.title }}
+                </div>
+            </nav>
+
+            <div class="d-flex flex-row">
+
+              <div class="flex-column d-flex flex-shrink-0 p-3" style="width: 260px; background-color: #c0b9b9;">
+    <!--                <a href="/" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">-->
+    <!--                  <svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>-->
+    <!--                  <span class="fs-5 fw-semibold">Collapsible</span>-->
+    <!--                </a>-->
+                    <ul class="d-flex flex-column list-group-item-light p-4 list-unstyled">
+
+                        <h4>Modules</h4>
+
+<!--                        <li {% if not subject %}class="nav-link active" style="background-color: #e1e1e1; border-radius: 5px;" {% endif %}>-->
+<!--                            <a class="h5" href="{% url 'course_list' %}">All</a>-->
+<!--                        </li>-->
+
+                        {% for m in object.modules.all %}
+                            <li data-id="{{ m.id }}" {% if m == module %}class="nav-link active" style="background-color: #e1e1e1; border-radius: 5px;"{% endif %}>
+                              <div class=""> Module {{ forloop.counter }}</div>
+                                <a class="h6" href="{% url 'student_course_detail_module' object.id m.id %}">
+<!--                                    <span>-->
+<!--                                        Module <span class="order">{{ m.order|add:1 }}</span>-->
+<!--                                    </span>-->
+<!--                                    <br>-->
+                                    {{ m.title }}
+                                </a>
+<!--                                <br>-->
+<!--                                <span class="small">-->
+<!--                                    {{ s.total_courses }} course{{ s.total_courses|pluralize }}-->
+<!--                                </span>-->
+                            </li>
+                        {% empty %}
+                              <li>No modules yet.</li>
+                        {% endfor %}
+
+                    </ul>
+
+                </div>
+
+              <div class="module">
+                  {% for content in module.contents.all %}
+                      {% with item=content.item %}
+                          <h2>{{ item.title }}</h2>
+                          {{ item.render }}
+                      {% endwith %}
+                  {% endfor %}
+              </div>
+
+            </div>
+        </main>
+
+
+
+        <footer class="footer text-center">
+            <div class="container">
+                <div class="row">
+                    <!-- Footer Location-->
+                    <div class="col-lg-4 mb-5 mb-lg-0">
+                        <h4 class="mb-4">LOCATION</h4>
+                        <p class="pre-wrap lead mb-0">2215 John Daniel Drive Clark, MO 65243</p>
+                    </div>
+                    <!-- Footer Social Icons-->
+                    <div class="col-lg-4 mb-5 mb-lg-0">
+                        <h4 class="mb-4">AROUND THE WEB</h4><a class="btn btn-outline-light btn-social mx-1" href="https://www.facebook.com/StartBootstrap"><i class="fab fa-fw fa-facebook-f"></i></a><a class="btn btn-outline-light btn-social mx-1" href="https://www.twitter.com/sbootstrap"><i class="fab fa-fw fa-twitter"></i></a><a class="btn btn-outline-light btn-social mx-1" href="https://www.linkedin.com/in/startbootstrap"><i class="fab fa-fw fa-linkedin-in"></i></a><a class="btn btn-outline-light btn-social mx-1" href="https://www.dribble.com/startbootstrap"><i class="fab fa-fw fa-dribbble"></i></a>
+                    </div>
+                    <!-- Footer About Text-->
+                    <div class="col-lg-4">
+                        <h4 class="mb-4">ABOUT FREELANCER</h4>
+                        <p class="pre-wrap lead mb-0">Freelance is a free to use, MIT licensed Bootstrap theme created by Start Bootstrap</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+
+        <!-- Copyright Section-->
+        <section class="copyright py-4 text-center text-white">
+            <div class="container"><small class="pre-wrap">Copyright © Your Website 2020</small></div>
+        </section>
+        <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes)-->
+        <div class="scroll-to-top d-lg-none position-fixed"><a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top"><i class="fa fa-chevron-up"></i></a></div>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        <!-- Third party plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+        <!-- Contact form JS-->
+        <script src="{% static 'assets/mail/jqBootstrapValidation.js' %}"></script>
+        <script src="{% static 'assets/mail/contact_me.js' %}"></script>
+        <!-- Core theme JS-->
+        <script src="{% static 'js/scripts.js' %}"></script>
+    </body>
+</html>
