@@ -198,8 +198,8 @@ class PrivateMediaStorage(S3Boto3Storage):
     custom_domain = False
 
 
-AWS_ACCESS_KEY_ID = 'DO00VU8VRXQUYWMTNAUX'
-AWS_SECRET_ACCESS_KEY = 'F/te6miDrCuHHRNo69kxRZjwEYUs+h1FdieK6cIcMNw'
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = 'biovideos'
 AWS_S3_ENDPOINT_URL = 'https://fra1.digitaloceanspaces.com'
 AWS_S3_OBJECT_PARAMETERS = {
