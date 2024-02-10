@@ -3,6 +3,8 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.template.loader import render_to_string
 from django.contrib.auth.models import User
+from django.conf import settings
+
 
 class Subject(models.Model):
     title = models.CharField(max_length=200)
@@ -76,6 +78,23 @@ class ItemBase(models.Model):
             f'courses/content/{self._meta.model_name}.html',
             {'item': self})
 
+from storages.backends.s3boto3 import S3Boto3Storage
+
+class StaticStorage(S3Boto3Storage):
+    location = 'static'
+    # default_acl = 'public-read'
+
+# class PublicMediaStorage(S3Boto3Storage):
+#     location = 'media'
+#     default_acl = 'public-read'
+#     file_overwrite = False
+
+class PrivateMediaStorage(S3Boto3Storage):
+    location = 'private'
+    default_acl = 'private'
+    file_overwrite = False
+    custom_domain = False
+
 class Text(ItemBase):
     content = models.TextField()
 
@@ -86,5 +105,5 @@ class Image(ItemBase):
     files = models.FileField(upload_to='images')
 
 class Video(ItemBase):
-    # url = models.URLField()
-    videos = models.FileField(upload_to='videos', blank=True, null=True)
+    # url = models.URLField(null=True, blank=True)
+    videos = models.FileField(storage=PrivateMediaStorage(), blank=True, null=True)
