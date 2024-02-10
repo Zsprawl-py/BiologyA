@@ -52,7 +52,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'courses.apps.CoursesConfig',
-    'firstpage.apps.FirstpageConfig'
+    'firstpage.apps.FirstpageConfig',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -147,12 +148,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'static'
+# STATIC_URL = 'static/'
+# STATIC_ROOT = BASE_DIR / 'static'
 # STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
-MEDIA_URL = 'media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+# MEDIA_URL = 'media/'
+# MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -177,3 +178,53 @@ EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+
+from storages.backends.s3boto3 import S3Boto3Storage
+
+class StaticStorage(S3Boto3Storage):
+    location = 'static'
+    # default_acl = 'public-read'
+
+# class PublicMediaStorage(S3Boto3Storage):
+#     location = 'media'
+#     default_acl = 'public-read'
+#     file_overwrite = False
+
+class PrivateMediaStorage(S3Boto3Storage):
+    location = 'private'
+    default_acl = 'private'
+    file_overwrite = False
+    custom_domain = False
+
+
+AWS_ACCESS_KEY_ID = 'DO00VU8VRXQUYWMTNAUX'
+AWS_SECRET_ACCESS_KEY = 'F/te6miDrCuHHRNo69kxRZjwEYUs+h1FdieK6cIcMNw'
+AWS_STORAGE_BUCKET_NAME = 'biovideos'
+AWS_S3_ENDPOINT_URL = 'https://fra1.digitaloceanspaces.com'
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+# AWS_DEFAULT_ACL = 'public-read'
+AWS_LOCATION = 'static'
+STATIC_URL = '%s/%s/' % (AWS_S3_ENDPOINT_URL, AWS_LOCATION)
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# karbord amoozeshi
+BASECSS = f'{STATIC_URL}admin/css/base.css'
+
+
+# # public media settings
+# PUBLIC_MEDIA_LOCATION = 'media'
+# DEFAULT_FILE_STORAGE = 'PublicMediaStorage'
+# private media settings
+PRIVATE_MEDIA_LOCATION = 'private'
+PRIVATE_FILE_STORAGE = 'PrivateMediaStorage'
+MEDIA_URL = '%s/%s/' % (AWS_S3_ENDPOINT_URL, PRIVATE_MEDIA_LOCATION)
+
+
+
+
+# AWS_PRIVATE_MEDIA_LOCATION = 'videos'
+# MEDIA_URL = 'https://%s/%s/' % (AWS_S3_ENDPOINT_URL, AWS_PRIVATE_MEDIA_LOCATION)
+# MEDIA_ROOT = BASE_DIR / 'media'
+

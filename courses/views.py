@@ -12,6 +12,8 @@ from .models import Course, Module, Content, Subject
 from .forms import ModuleFormSet
 from account.forms import CourseEnrollForm
 
+from django.conf import settings
+
 
 class OwnerMixin:
     def get_queryset(self):
@@ -122,7 +124,11 @@ class ModuleContentListView(TemplateResponseMixin, View):
 
     def get(self, request, module_id):
         module = get_object_or_404(Module, id=module_id, course__owner=request.user)
-        return self.render_to_response({'module': module})
+        context = {
+            'module': module,
+            'MEDIA_URL': settings.MEDIA_URL  # Add MEDIA_URL to the context
+        }
+        return self.render_to_response(context)
 
 
 
