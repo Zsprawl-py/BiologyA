@@ -8,7 +8,7 @@ class UserRegistrationForm(forms.ModelForm):
     password2 = forms.CharField(label='Repeat password', widget=forms.PasswordInput)
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'email',)
+        fields = ('username', 'email',)
 
     def clean_password2(self):
         cd = self.cleaned_data
@@ -26,7 +26,7 @@ class UserRegistrationForm(forms.ModelForm):
 class UserEditForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'email',)
+        fields = ('username', 'email',)
 
     def clean_email(self):
         data = self.cleaned_data['email']

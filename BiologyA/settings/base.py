@@ -171,13 +171,20 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'account.authentication.EmailAuthBackend',]
 
-SERVER_EMAIL = 'noreply@asghartavana'
-DEFAULT_FROM_EMAIL = 'noreply@asghartavana'
-EMAIL_HOST = 'smtp.gmail.com'
+# SERVER_EMAIL = 'noreply@asghartavana'
+DEFAULT_FROM_EMAIL = 'noreply@biostellar.org'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+
+EMAIL_HOST = 'smtp.zoho.eu'
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 
 
 from storages.backends.s3boto3 import S3Boto3Storage
@@ -228,3 +235,6 @@ MEDIA_URL = '%s/%s/' % (AWS_S3_ENDPOINT_URL, PRIVATE_MEDIA_LOCATION)
 # MEDIA_URL = 'https://%s/%s/' % (AWS_S3_ENDPOINT_URL, AWS_PRIVATE_MEDIA_LOCATION)
 # MEDIA_ROOT = BASE_DIR / 'media'
 
+
+TELEGRAM_BOT_TOKEN=env('TELEGRAM_BOT_TOKEN')
+TELEGRAM_CHANNEL_ID=env('TELEGRAM_CHANNEL_ID')

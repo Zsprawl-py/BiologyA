@@ -1,13 +1,145 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Freelancer - Start Bootstrap Theme</title>
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+        <!-- Fonts CSS-->
+        <link rel="stylesheet" href="{% static 'css/heading.css' %}">
+        <link rel="stylesheet" href="{% static 'css/body.css' %}">
+    </head>
 
-{% block title %}Create an account{% endblock %}
+    <body>
 
-{% block content %}
-    <h1>Create an account</h1>
-    <p>Please, sign up using the following form:</p>
-    <form method="post">
-        {{ user_form.as_p }}
-        {% csrf_token %}
-        <p><input type="submit" value="Create my account"></p>
-    </form>
-{% endblock %}
+        <div class="d-flex flex-column">
+
+
+            <nav class="d-flex navbar navbar-expand-lg bg-secondary " id="mainNav">
+                <div class="container"><a class="navbar-brand js-scroll-trigger" href="{% url 'firstpage' %}">BIOSTELLAR</a>
+                    <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
+                    <div class="collapse navbar-collapse" id="navbarResponsive">
+
+                    </div>
+                </div>
+            </nav>
+
+
+            <section class="d-flex vh-100 mb-5">
+                  <div class="container-fluid h-custom">
+                    <div class="row d-flex justify-content-center align-items-center h-100">
+                      <div class="col-md-9 col-lg-6 col-xl-5">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                          class="img-fluid" alt="Sample image">
+                      </div>
+                      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+
+                        <form method="post">
+                         {% csrf_token %}
+
+                          <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
+                            <p class="lead fw-normal mb-0 me-3">Sign in with</p>
+                            <button type="button" class="btn btn-primary btn-floating mx-1">
+                              <i class="fab fa-facebook-f"></i>
+                            </button>
+
+                            <button type="button" class="btn btn-primary btn-floating mx-1">
+                              <i class="fab fa-twitter"></i>
+                            </button>
+
+                            <button type="button" class="btn btn-primary btn-floating mx-1">
+                              <i class="fab fa-linkedin-in"></i>
+                            </button>
+                          </div>
+
+                          <div class="divider d-flex align-items-center my-4">
+                            <p class="text-center fw-bold mx-3 mb-0">Or</p>
+                          </div>
+
+                            {% if form.errors %}
+                                <p>
+                                    Your username and password didn't match.
+                                    Please try again.
+                                </p>
+                            {% endif %}
+
+                          <!-- Username input -->
+                          <div class="form-outline mb-4">
+                            <input type="text" name="username" id="id_username" class="form-control form-control-lg"
+                              placeholder="Enter a unique Username:" />
+                            <label class="form-label" for="id_username">Username</label>
+                          </div>
+
+                          <!-- Email input -->
+                          <div class="form-outline mb-4">
+                            <input type="email" name="email" id="id_email" class="form-control form-control-lg"
+                              placeholder="Enter a valid email address" />
+                            <label class="form-label" for="id_email">Email address</label>
+                          </div>
+
+                          <!-- Password input -->
+                          <div class="form-outline mb-3">
+                            <input type="password" name="password" id="id_password" class="form-control form-control-lg"
+                              placeholder="Enter password" />
+                            <label class="form-label" for="id_password">Password</label>
+                          </div>
+
+                          <!-- Password2 input -->
+                          <div class="form-outline mb-3">
+                            <input type="password" name="password2" id="id_password2" class="form-control form-control-lg"
+                              placeholder="Enter password" />
+                            <label class="form-label" for="id_password2">Password</label>
+                          </div>
+
+                          <div class="d-flex justify-content-between align-items-center">
+                            <!-- Checkbox -->
+                            <div class="form-check mb-0">
+                              <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
+                              <label class="form-check-label" for="form2Example3">
+                                Remember me
+                              </label>
+                            </div>
+    <!--                        <a href="{% url 'password_reset' %}" class="text-body">Forgot password?</a>-->
+                          </div>
+
+                          <div class="text-center text-lg-start mt-4 pt-2">
+                            <button type="submit" class="btn btn-primary btn-lg"
+                              style="padding-left: 2.5rem; padding-right: 2.5rem;">Sign Up</button>
+                            <p class="small fw-bold mt-2 pt-1 mb-0">Already have an account? <a href="{% url 'login' %}"
+                                class="link-danger">Sign In</a></p>
+                          </div>
+
+                        </form>
+
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+
+        </div>
+
+        <!-- Bootstrap core JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        <!-- Third party plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+        <!-- Contact form JS-->
+        <script src="{% static 'assets/mail/jqBootstrapValidation.js' %}"></script>
+        <script src="{% static 'assets/mail/contact_me.js' %}"></script>
+        <!-- Core theme JS-->
+        <script src="{% static 'js/scripts.js' %}"></script>
+
+    </body>
+</html>
+
+
+
+
+

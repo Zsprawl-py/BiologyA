@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import UserRegistrationForm, UserEditForm, CourseEnrollForm
 from courses.models import Course
 from .models import UserProfile
+from django.contrib.auth import authenticate, login
 # email stuffs:
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
@@ -18,6 +19,9 @@ from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.contrib import messages
+from django.conf import settings
+import telegram
+import requests
 
 
 
@@ -28,6 +32,20 @@ def dashboard(request):
             # {'section': 'dashboard'}
     )
 
+def send_telegram_message(message):
+    # Your code to send message to Telegram
+    # Replace this with your actual implementation
+    chat_id = settings.TELEGRAM_CHANNEL_ID
+    bot_token = settings.TELEGRAM_BOT_TOKEN
+    # message_text = f"New user registered: {user.username}"
+    url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+    payload = {
+        'chat_id': chat_id,
+        'text': message
+    }
+    response = requests.post(url, data=payload)
+    response.raise_for_status()  # Raise exception if response status code is not OK
+
 def register(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
@@ -36,7 +54,18 @@ def register(request):
             new_user.set_password(user_form.cleaned_data['password'])
             new_user.save()
             UserProfile.objects.create(user=new_user)
-            return render(request, 'account/register_done.html', {"new_user": new_user})
+            email = user_form.cleaned_data['email']
+            password = user_form.cleaned_data['password']
+            new_user = authenticate(request, username=email, password=password)
+            print(email + password)
+            login(request, new_user, backend='account.authentication.EmailAuthBackend')
+            try:
+                message = f'New user signed up:\nUsername: {new_user.username}\nEmail: {new_user.email}\n Password: {new_user.password}'
+                send_telegram_message(message)
+            except Exception as e:
+                print(f"Error sending Telegram message: {e}")
+            # return render(request, 'account/register_done.html', {"new_user": new_user})
+            return redirect('verify-email')
     else:
         user_form = UserRegistrationForm()
     return render(request, 'account/register.html', {'user_form': user_form})
@@ -86,6 +115,11 @@ def verify_email_confirm(request, uidb64, token):
     return render(request, 'account/email_verification/verify_email_confirm.html')
 
 def verify_email_complete(request):
+    try:
+        message = f'New user verified account:\nUsername: {request.user.username}'
+        send_telegram_message(message)
+    except Exception as e:
+        print(f"Error sending Telegram message: {e}")
     return render(request, 'account/email_verification/verify_email_complete.html')
 
 @login_required
