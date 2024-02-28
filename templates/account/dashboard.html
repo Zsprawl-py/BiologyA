@@ -1,11 +1,85 @@
-{% extends "base.html" %}
+{% extends "course-base.html" %}
 
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-  <h1>Dashboard</h1>
-  <p>
-  Welcome to your dashboard. You can <a href="{% url 'edit_profile' %}">edit your
-  profile</a> or <a href="{% url 'password_change' %}">change your password</a>.
-  </p>
+
+  <header class="d-flex flex-column">
+    <nav class="navbar navbar-expand-lg bg-secondary " id="mainNav">
+        <div class="container"><a class="navbar-brand js-scroll-trigger" href="{% url 'firstpage' %}">BIOSTELLAR</a>
+            <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'course_list' %}">Courses</a>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">Articles</a>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">Roadmap</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'dashboard' %}">Hello {{ user }}</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="btn btn-outline-light nav-link py-2 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'register' %}" role="button">Sign Up</a>
+                        </li>
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="btn btn-outline-light nav-link py-2 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'login' %}" role="button">Log in</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+  </header>
+
+    {% if messages %}
+    <ul class="messages text-danger">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}> {{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+  <div class="flex-grow-1 d-flex flex-column justify-content-center">
+    <h3 class="p-3">Dashboard</h3>
+    <p class="ps-3">
+      Welcome to your dashboard.
+    </p>
+
+    <hr>
+
+    <ul class="list-group list-group-flush">
+      <li class="pl-3 font-weight-bold">your courses:</li>
+      <ul>
+        {% for course in courses%}
+          <li class="list-group-item">
+            <a href="{% url 'student_course_detail' course.id %}">{{ course }}</a>
+          </li>
+        {% empty %}
+          <p>you havent enrolled in any course yet.</p>
+        {% endfor %}
+      </ul>
+    </ul>
+
+    <br>
+
+    {% if user.profile.verified == False %}
+      <p class="pl-3">your account is not verified yet. you have to activate it <a href="{% url 'verify-email' %}">here</a>.</p>
+    {% endif %}
+
+    <hr>
+
+    <p class="pl-3">You can <a href="{% url 'edit_profile' %}">edit your
+      profile</a> or <a href="{% url 'password_change' %}">change your password</a>.
+    </p>
+
+    <p class="pl-3">
+      <a href="{% url 'logout' %}">logout</a>
+    </p>
+  </div>
+
 {% endblock %}

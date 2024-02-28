@@ -17,6 +17,7 @@ urlpatterns = [
     path('', views.dashboard, name='dashboard'),
     path('register/', views.register, name='register'),
     path('edit/', views.edit_profile, name='edit_profile'),
+
     path('enroll-course', views.StudentEnrollCourseView.as_view(), name='student_enroll_course'),
     path('courses/', views.StudentCourseListView.as_view(), name='student_course_list'),
     path('course/<pk>/', views.StudentCourseDetailView.as_view(), name='student_course_detail'),

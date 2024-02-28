@@ -27,10 +27,8 @@ import requests
 
 @login_required
 def dashboard(request):
-    return render(request,
-            'account/dashboard.html',
-            # {'section': 'dashboard'}
-    )
+    courses = request.user.courses_joined.all()
+    return render(request,'account/dashboard.html', {"courses":courses})
 
 def send_telegram_message(message):
     # Your code to send message to Telegram
@@ -138,19 +136,33 @@ class StudentEnrollCourseView(LoginRequiredMixin, FormView):
     form_class = CourseEnrollForm
     def form_valid(self, form):
         self.course = form.cleaned_data['course']
+
+        # Check if the user's profile is verified
+        if not self.request.user.profile.verified:
+            messages.warning(self.request, "Please verify your email before enrolling in courses.")
+            return redirect('dashboard')
+
         self.course.students.add(self.request.user)
         return super().form_valid(form)
     def get_success_url(self):
         return reverse_lazy('student_course_detail', args=[self.course.id])
 
-class StudentCourseListView(LoginRequiredMixin, ListView):
+class VerifiedUserMixin:
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated and request.user.profile.verified:
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            messages.warning(request, "You need to verify your email to access this page.")
+            return redirect('dashboard')  # Redirect to your dashboard URL
+
+class StudentCourseListView(VerifiedUserMixin, LoginRequiredMixin, ListView):
     model = Course
     template_name = 'account/course/list.html'
     def get_queryset(self):
         qs = super().get_queryset()
         return qs.filter(students__in=[self.request.user])
 
-class StudentCourseDetailView(DetailView):
+class StudentCourseDetailView(VerifiedUserMixin, LoginRequiredMixin, DetailView):
     model = Course
     template_name = 'account/course/detail_test.html'
     def get_queryset(self):

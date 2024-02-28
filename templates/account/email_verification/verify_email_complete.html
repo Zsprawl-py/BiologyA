@@ -1,3 +1,109 @@
-<div class="alert alert-success">
-    You have successfully verified your e-mail
-</div>
+{% extends 'register-base.html'%}
+
+{% block content%}
+
+    <div class="d-flex flex-column">
+
+        <nav class="d-flex navbar navbar-expand-lg bg-secondary " id="mainNav">
+            <div class="container"><a class="navbar-brand js-scroll-trigger" href="{% url 'firstpage' %}">BIOSTELLAR</a>
+                <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+
+                </div>
+            </div>
+        </nav>
+
+        <section class="d-flex vh-100 mb-5">
+              <div class="container-fluid h-custom">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                  <div class="col-md-9 col-lg-6 col-xl-5">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                      class="img-fluid" alt="Sample image">
+                  </div>
+                  <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+
+                    <h3>
+                        You have successfully verified your e-mail.
+                        You can now access to your <a href="{% url 'dashboard' %}">account</a>.
+                    </h3>
+
+                  </div>
+                </div>
+              </div>
+        </section>
+
+    </div>
+
+{% endblock %}
+
+
+
+<!--<!DOCTYPE html>-->
+<!--{% load static %}-->
+<!--<html lang="en">-->
+<!--    <head>-->
+<!--        <meta charset="utf-8">-->
+<!--        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">-->
+<!--        <meta name="description" content="">-->
+<!--        <meta name="author" content="">-->
+<!--        <title>Freelancer - Start Bootstrap Theme</title>-->
+<!--        &lt;!&ndash; Font Awesome icons (free version)&ndash;&gt;-->
+<!--        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>-->
+<!--        &lt;!&ndash; Core theme CSS (includes Bootstrap)&ndash;&gt;-->
+<!--        <link href="{% static 'css/styles.css' %}" rel="stylesheet">-->
+<!--        &lt;!&ndash; Fonts CSS&ndash;&gt;-->
+<!--        <link rel="stylesheet" href="{% static 'css/heading.css' %}">-->
+<!--        <link rel="stylesheet" href="{% static 'css/body.css' %}">-->
+<!--    </head>-->
+
+<!--    <body>-->
+
+<!--        <div class="d-flex flex-column">-->
+<!--            -->
+<!--            <nav class="d-flex navbar navbar-expand-lg bg-secondary " id="mainNav">-->
+<!--                <div class="container"><a class="navbar-brand js-scroll-trigger" href="{% url 'firstpage' %}">BIOSTELLAR</a>-->
+<!--                    <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>-->
+<!--                    <div class="collapse navbar-collapse" id="navbarResponsive">-->
+
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </nav>-->
+<!--            -->
+<!--            <section class="d-flex vh-100 mb-5">-->
+<!--                  <div class="container-fluid h-custom">-->
+<!--                    <div class="row d-flex justify-content-center align-items-center h-100">-->
+<!--                      <div class="col-md-9 col-lg-6 col-xl-5">-->
+<!--                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"-->
+<!--                          class="img-fluid" alt="Sample image">-->
+<!--                      </div>-->
+<!--                      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">-->
+
+<!--                        <h2>-->
+<!--                            You have successfully verified your e-mail-->
+<!--                        </h2>-->
+
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--            </section>-->
+<!--            -->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Bootstrap core JS&ndash;&gt;-->
+<!--        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
+<!--        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>-->
+<!--        &lt;!&ndash; Third party plugin JS&ndash;&gt;-->
+<!--        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>-->
+<!--        &lt;!&ndash; Contact form JS&ndash;&gt;-->
+<!--        <script src="{% static 'assets/mail/jqBootstrapValidation.js' %}"></script>-->
+<!--        <script src="{% static 'assets/mail/contact_me.js' %}"></script>-->
+<!--        &lt;!&ndash; Core theme JS&ndash;&gt;-->
+<!--        <script src="{% static 'js/scripts.js' %}"></script>-->
+
+<!--    </body>-->
+<!--</html>-->
+
+
+
+
+
