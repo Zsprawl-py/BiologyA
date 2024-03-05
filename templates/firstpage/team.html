@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>{% block title %}Team{% endblock %}</title>
+
+<!--    &lt;!&ndash;    Django 4 by example's link:&ndash;&gt;-->
+<!--        <link href="{% static 'css/base.css' %}" rel="stylesheet">-->
+    <!--    Bootstrap:-->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <!-- Font Awesome icons (free version)(from login template site)-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
+    <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'css/styles2.css' %}" rel="stylesheet">
+    <!-- Fonts CSS-->
+        <link rel="stylesheet" href="{% static 'css/heading.css' %}">
+        <link rel="stylesheet" href="{% static 'css/body.css' %}">
+        <link rel="icon" href="{% static 'favcon/favicon.ico' %}" type="image/x-icon">
+    </head>
+
+<body>
+
+    <header class="d-flex flex-column mb-5">
+        <nav class="navbar navbar-expand-lg bg-secondary " id="mainNav">
+            <div class="container"><a class="navbar-brand js-scroll-trigger" href="{% url 'firstpage' %}">BIOSTELLAR</a>
+                <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'course_list' %}">Courses</a>
+                        </li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">Articles</a>
+                        </li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">Roadmap</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        {% if user.is_authenticated %}
+                            <li class="nav-item mx-0 mx-lg-1">
+                                <a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'dashboard' %}">Hello {{ user }}</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item mx-0 mx-lg-1">
+                                <a class="btn btn-outline-light nav-link py-2 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'register' %}" role="button">Sign Up</a>
+                            </li>
+                            <li class="nav-item mx-0 mx-lg-1">
+                                <a class="btn btn-outline-light nav-link py-2 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'login' %}" role="button">Log in</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="d-flex flex-column px-5">
+    {% for member in team %}
+
+        <a class="text-decoration-none" data-bs-toggle="collapse" href="#{{ member.pk }}" aria-expanded="false" aria-controls="collapseExample">
+            <div class="card mb-4">
+                <div class="row g-0">
+
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <h5 class="card-title">{{ member.name }}</h5>
+                        <p class="card-text">{{ member.description }}</p>
+                        <p class="card-text"><small class="text-body-secondary">{{ member.email }}</small></p>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <img src="{{ member.image.url }}" class="img-fluid rounded-right" alt="{{ member.name }}">
+                    </div>
+
+                <!--  <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">-->
+                <!--    Link with href-->
+                <!--  </a>-->
+
+                <!--  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">-->
+                <!--    Button with data-bs-target-->
+                <!--  </button>-->
+
+                </div>
+            </div>
+        </a>
+
+
+        <div class="collapse mb-5 px-4" id="{{ member.pk }}">
+          <div class="">
+            <p>courses:
+            {% for course in member.courses.all %}
+                {{ course }}
+<!--                <div class="col-4">-->
+<!--                    <div class="card shadow-sm ">-->
+<!--                        <div class="card-header p-0">-->
+<!--                            {% if course.photo %}-->
+<!--                            <img src="{{ course.photo.url }}" class="card-img-top img-fluid" alt="{{ course.title }}">-->
+<!--                            {% else %}-->
+<!--                            <svg class="bd-placeholder-img card-img-top img-fluid" width="100%" height="237" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">-->
+<!--                                <title>Placeholder</title>-->
+<!--                                <rect width="100%" height="100%" fill="#55595c"/>-->
+<!--                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>-->
+<!--                            </svg>-->
+<!--                            {% endif %}-->
+<!--                        </div>-->
+<!--                        <div class="card-body">-->
+<!--                          <p class="card-text">{{ course.title }}</p>-->
+<!--                          <div class="d-flex justify-content-between align-items-center">-->
+<!--                            <div class="btn-group">-->
+<!--    &lt;!&ndash;                                          <button type="button" class="btn btn-sm btn-outline-secondary">View</button>&ndash;&gt;-->
+<!--                              <a class="btn btn-sm btn-outline-secondary" href="{% url 'course_detail' course.slug %}" role="button">Go to Course</a>-->
+<!--    &lt;!&ndash;                                          <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>&ndash;&gt;-->
+<!--                            </div>-->
+<!--                            <small class="text-body-secondary">{{ course.total_modules }} modules.</small>-->
+<!--                          </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+            {% endfor %}
+            </p>
+          </div>
+        </div>
+
+    {% endfor %}
+    </div>
+
+
+
+
+<!--    Bootstrap:-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+<!-- Bootstrap core JS(from login template's website)-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<!-- Third party plugin JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+<!-- Contact form JS-->
+    <script src="{% static 'assets/mail/jqBootstrapValidation.js' %}"></script>
+    <script src="{% static 'assets/mail/contact_me.js' %}"></script>
+<!-- Core theme JS-->
+    <script src="{% static 'js/scripts.js' %}"></script>
+
+</body>
+
+
+</html>
+
+
+
+
+
+
+
+
+

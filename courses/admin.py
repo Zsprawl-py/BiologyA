@@ -1,4 +1,4 @@
-from .models import Course, Module, Subject, Content
+from .models import Course, Module, Subject, Content, Team
 from django.contrib import admin
 
 
@@ -23,3 +23,7 @@ class CourseAdmin(admin.ModelAdmin):
 # @admin.register(Content)
 # class ContentAdmin(admin.ModelAdmin):
 #     list_display = ['module', 'content_type', 'object_id',]
+
+@admin.register(Team)
+class TeamAdmin(admin.ModelAdmin):
+    list_display = ['name', 'slug', 'description', 'email', 'image', 'rule']

@@ -5,8 +5,25 @@ from django.template.loader import render_to_string
 from django.contrib.auth.models import User
 from django.conf import settings
 
-from BiologyA.settings.base import PrivateMediaStorage
+from BiologyA.settings.base import PrivateMediaStorage, ImageStorage, FileStorage
 
+
+class Team(models.Model):
+    RULES = [
+        ("instructor", "INSTRUCTOR"),
+    ]
+
+    name = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=200, unique=True)
+    description = models.TextField(blank=True, null=True)
+    image = models.ImageField(storage=ImageStorage(), blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    rule = models.CharField(choices=RULES, max_length=200, blank=True, null=True)
+    # courses = models.ForeignKey(Course, related_name='instructor', on_delete=models.CASCADE, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
 
 class Subject(models.Model):
     title = models.CharField(max_length=200)
@@ -22,6 +39,7 @@ class Course(models.Model):
     owner = models.ForeignKey(User,
                               related_name='course_created',
                               on_delete=models.CASCADE)
+    instructor = models.ForeignKey(Team, related_name='courses', on_delete=models.CASCADE, blank=True, null=True)
     students = models.ManyToManyField(User,
                                       related_name='courses_joined',
                                       # on_delete=models.CASCADE,
@@ -33,6 +51,8 @@ class Course(models.Model):
     slug = models.SlugField(max_length=200, unique=True)
     overview = models.CharField()
     created = models.DateTimeField(auto_now_add=True)
+    # photo = models.FileField(storage=ImageStorage(), blank=True, null=True)
+    photo = models.ImageField(storage=ImageStorage(), blank=True, null=True)
 
     class Meta:
         ordering = ['-created']
@@ -80,32 +100,17 @@ class ItemBase(models.Model):
             f'courses/content/{self._meta.model_name}.html',
             {'item': self})
 
-from storages.backends.s3boto3 import S3Boto3Storage
-
-class StaticStorage(S3Boto3Storage):
-    location = 'static'
-    # default_acl = 'public-read'
-
-class PublicMediaStorage(S3Boto3Storage):
-    location = 'media'
-    default_acl = 'public-read'
-    file_overwrite = False
-
-# class PrivateMediaStorage(S3Boto3Storage):
-#     location = 'private'
-#     default_acl = 'private'
-#     file_overwrite = False
-#     custom_domain = False
 
 class Text(ItemBase):
     content = models.TextField()
 
 class File(ItemBase):
-    content = models.FileField(upload_to='files')
+    # content = models.FileField(upload_to='files')
+    content = models.FileField(storage=FileStorage(), blank=True, null=True)
 
 class Image(ItemBase):
-    files = models.FileField(upload_to='images')
-    # images = models.FileField(storage=PublicMediaStorage(), blank=True, null=True)
+    # files = models.FileField(upload_to='images')
+    images = models.FileField(storage=ImageStorage(), blank=True, null=True)
 
 class Video(ItemBase):
     # url = models.URLField(null=True, blank=True)

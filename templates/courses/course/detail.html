@@ -7,6 +7,7 @@
 {% block content %}
 
 <header class="d-flex flex-column">
+
     <nav class="navbar navbar-expand-lg bg-secondary " id="mainNav">
         <div class="container"><a class="navbar-brand js-scroll-trigger" href="{% url 'firstpage' %}">BIOSTELLAR</a>
             <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
@@ -36,7 +37,8 @@
             </div>
         </div>
     </nav>
-  </header>
+
+</header>
 
 
 <div class="container">
@@ -55,7 +57,8 @@
                     <a href="{% url 'course_list_subject' subject.slug %}">
                     {{ subject.title }}</a>.
                     {{ object.modules.count }} modules.
-                    Instructor: {{ object.owner.get_full_name }}
+                    <br>
+                    Instructor: <a href="{% url 'team' %}">{{ object.instructor.name }}</a>
                 </p>
                 {{ object.overview|linebreaks }}
                 {% if request.user.is_authenticated %}
@@ -82,13 +85,17 @@
         {% endwith %}
     </div>
 
-      <div class="col-md-5 pt-3">
-        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-bg)"/><text x="50%" y="50%" fill="var(--bs-secondary-color)" dy=".3em">500x500</text></svg>
+      <div class="col-md-5 pt-5">
+<!--        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(&#45;&#45;bs-secondary-bg)"/><text x="50%" y="50%" fill="var(&#45;&#45;bs-secondary-color)" dy=".3em">500x500</text></svg>-->
+          <img src="{{ course.photo.url }}" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" alt="{{ course.title }}">
       </div>
 
     </div>
 </div>
 
+<section class="copyright py-4 text-center text-white fixed-bottom">
+    <div class="container"><small class="pre-wrap">Copyright © Biostellar 2024</small></div>
+</section>
 
 
 {% endblock %}

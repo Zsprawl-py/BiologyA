@@ -49,6 +49,7 @@
         </nav>
 
         <main style="margin-top: 100px;">
+
             <nav class="bg-primary flex-shrink-0 p-3">
                 <div class="pl-5 h3">
                     {% if subject %}
@@ -58,7 +59,9 @@
                     {% endif %}
                 </div>
             </nav>
+
             <div class="d-flex flex-row">
+
                 <div class="flex-column d-flex flex-shrink-0 p-3" style="width: 260px; background-color: #c0b9b9;">
     <!--                <a href="/" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">-->
     <!--                  <svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>-->
@@ -144,15 +147,26 @@
                     </ul>
 
                 </div>
-                <div class="album py-5 bg-body-tertiary">
+
+                <div class="album py-5 bg-body-tertiary flex-grow-1">
                     <div class="container">
                         <div class="row g-3">
 
                         {% for course in courses %}
                             {% with subject=course.subject %}
-                            <div class="col">
+                            <div class="col-4">
                                 <div class="card shadow-sm">
-                                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+                                    <div class="card-header p-0">
+                                        {% if course.photo %}
+                                        <img src="{{ course.photo.url }}" class="card-img-top img-fluid" alt="{{ course.title }}">
+                                        {% else %}
+                                        <svg class="bd-placeholder-img card-img-top img-fluid" width="100%" height="237" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                            <title>Placeholder</title>
+                                            <rect width="100%" height="100%" fill="#55595c"/>
+                                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+                                        </svg>
+                                        {% endif %}
+                                    </div>
                                     <div class="card-body">
                                       <p class="card-text">{{ course.title }}</p>
                                       <div class="d-flex justify-content-between align-items-center">
@@ -519,31 +533,31 @@
 <!--        </section>-->
 
 
-        <footer class="footer text-center">
-            <div class="container">
-                <div class="row">
-                    <!-- Footer Location-->
-                    <div class="col-lg-4 mb-5 mb-lg-0">
-                        <h4 class="mb-4">LOCATION</h4>
-                        <p class="pre-wrap lead mb-0">2215 John Daniel Drive Clark, MO 65243</p>
-                    </div>
-                    <!-- Footer Social Icons-->
-                    <div class="col-lg-4 mb-5 mb-lg-0">
-                        <h4 class="mb-4">AROUND THE WEB</h4><a class="btn btn-outline-light btn-social mx-1" href="https://www.facebook.com/StartBootstrap"><i class="fab fa-fw fa-facebook-f"></i></a><a class="btn btn-outline-light btn-social mx-1" href="https://www.twitter.com/sbootstrap"><i class="fab fa-fw fa-twitter"></i></a><a class="btn btn-outline-light btn-social mx-1" href="https://www.linkedin.com/in/startbootstrap"><i class="fab fa-fw fa-linkedin-in"></i></a><a class="btn btn-outline-light btn-social mx-1" href="https://www.dribble.com/startbootstrap"><i class="fab fa-fw fa-dribbble"></i></a>
-                    </div>
-                    <!-- Footer About Text-->
-                    <div class="col-lg-4">
-                        <h4 class="mb-4">ABOUT FREELANCER</h4>
-                        <p class="pre-wrap lead mb-0">Freelance is a free to use, MIT licensed Bootstrap theme created by Start Bootstrap</p>
-                    </div>
-                </div>
-            </div>
-        </footer>
+<!--        <footer class="footer text-center">-->
+<!--            <div class="container">-->
+<!--                <div class="row">-->
+<!--                    &lt;!&ndash; Footer Location&ndash;&gt;-->
+<!--                    <div class="col-lg-4 mb-5 mb-lg-0">-->
+<!--                        <h4 class="mb-4">LOCATION</h4>-->
+<!--                        <p class="pre-wrap lead mb-0">2215 John Daniel Drive Clark, MO 65243</p>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash; Footer Social Icons&ndash;&gt;-->
+<!--                    <div class="col-lg-4 mb-5 mb-lg-0">-->
+<!--                        <h4 class="mb-4">AROUND THE WEB</h4><a class="btn btn-outline-light btn-social mx-1" href="https://www.facebook.com/StartBootstrap"><i class="fab fa-fw fa-facebook-f"></i></a><a class="btn btn-outline-light btn-social mx-1" href="https://www.twitter.com/sbootstrap"><i class="fab fa-fw fa-twitter"></i></a><a class="btn btn-outline-light btn-social mx-1" href="https://www.linkedin.com/in/startbootstrap"><i class="fab fa-fw fa-linkedin-in"></i></a><a class="btn btn-outline-light btn-social mx-1" href="https://www.dribble.com/startbootstrap"><i class="fab fa-fw fa-dribbble"></i></a>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash; Footer About Text&ndash;&gt;-->
+<!--                    <div class="col-lg-4">-->
+<!--                        <h4 class="mb-4">ABOUT FREELANCER</h4>-->
+<!--                        <p class="pre-wrap lead mb-0">Freelance is a free to use, MIT licensed Bootstrap theme created by Start Bootstrap</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </footer>-->
 
 
         <!-- Copyright Section-->
         <section class="copyright py-4 text-center text-white">
-            <div class="container"><small class="pre-wrap">Copyright © Your Website 2020</small></div>
+            <div class="container"><small class="pre-wrap">Copyright © Biostellar 2024</small></div>
         </section>
         <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes)-->
         <div class="scroll-to-top d-lg-none position-fixed"><a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top"><i class="fa fa-chevron-up"></i></a></div>

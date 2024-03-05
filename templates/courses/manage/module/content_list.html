@@ -30,26 +30,32 @@
     <p><a href="{% url 'course_module_update' course.id %}">
     Edit modules</a></p>
   </div>
+
   <div class="module">
     <h2>Module {{ module.order|add:1 }}: {{ module.title }}</h2>
     <h3>Module contents:</h3>
     <div id="module-contents">
       {% for content in module.contents.all %}
         <div data-id="{{ content.id }}">
+
           {% with item=content.item %}
             <p>{{ item }} ({{ item|model_name }})</p>
 
             {% if item|model_name == 'image' %}
-              <p>this is :{{item.files.url}}</p>
-              <img src='{{item.files.url}}' alt="nothing">
+              {% if item.images %}
+  <!--              <p>this is :{{item.images.url}}</p>-->
+                <img class="img-fluid" src='{{ item.images.url }}' alt="nothing">
+              {% endif %}
             {% endif %}
 
             {% if item|model_name == 'video' %}
-              <p> this is : https://fra1.digitaloceanspaces.com/biovideos/private/{{ item.videos }}</p>
-              <video width="320" height="240" controls>
-                <source src="https://fra1.digitaloceanspaces.com/biovideos/private/{{ item.videos }}" type="video/mp4">
-              Your browser does not support the video tag.
-              </video>
+<!--              <p> this is : https://fra1.digitaloceanspaces.com/biovideos/private/{{ item.videos }}</p>-->
+              {% if item.videos %}
+                <video class="w-100 rounded" autoplay loop muted controls>
+                    <source src="{{ item.videos.url }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+              {% endif %}
             {% endif %}
 
             <a href="{% url 'module_content_update' module.id item|model_name item.id %}">
@@ -61,6 +67,7 @@
               {% csrf_token %}
             </form>
           {% endwith %}
+
         </div>
       {% empty %}
         <p>This module has no contents yet.</p>

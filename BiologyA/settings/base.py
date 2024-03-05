@@ -197,10 +197,15 @@ class StaticStorage(S3Boto3Storage):
     location = 'static'
     # default_acl = 'public-read'
 
-# class PublicMediaStorage(S3Boto3Storage):
-#     location = 'media'
-#     default_acl = 'public-read'
-#     file_overwrite = False
+class ImageStorage(S3Boto3Storage):
+    location = 'images'
+    default_acl = 'public-read'
+    file_overwrite = False
+
+class FileStorage(S3Boto3Storage):
+    location = 'files'
+    default_acl = 'public-read'
+    file_overwrite = False
 
 class PrivateMediaStorage(S3Boto3Storage):
     location = 'private'
@@ -216,7 +221,8 @@ AWS_S3_ENDPOINT_URL = 'https://fra1.digitaloceanspaces.com'
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
 }
-# AWS_DEFAULT_ACL = 'public-read'
+
+
 AWS_LOCATION = 'static'
 STATIC_URL = '%s/%s/' % (AWS_S3_ENDPOINT_URL, AWS_LOCATION)
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
@@ -228,9 +234,9 @@ BASECSS = f'{STATIC_URL}admin/css/base.css'
 # PUBLIC_MEDIA_LOCATION = 'media'
 # DEFAULT_FILE_STORAGE = 'PublicMediaStorage'
 # private media settings
-PRIVATE_MEDIA_LOCATION = 'private'
-PRIVATE_FILE_STORAGE = 'PrivateMediaStorage'
-MEDIA_URL = '%s/%s/' % (AWS_S3_ENDPOINT_URL, PRIVATE_MEDIA_LOCATION)
+# PRIVATE_MEDIA_LOCATION = 'private'
+# PRIVATE_FILE_STORAGE = 'PrivateMediaStorage'
+# MEDIA_URL = '%s/%s/' % (AWS_S3_ENDPOINT_URL, PRIVATE_MEDIA_LOCATION)
 
 
 
