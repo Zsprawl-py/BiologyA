@@ -27,7 +27,7 @@
                         </li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">Articles</a>
                         </li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">Roadmap</a>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'team' %}">Team</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ml-auto">
@@ -148,14 +148,14 @@
 
                 </div>
 
-                <div class="album py-5 bg-body-tertiary flex-grow-1">
+                <div class="album py-3 bg-body-tertiary flex-grow-1">
                     <div class="container">
-                        <div class="row g-3">
+                        <div class="row">
 
                         {% for course in courses %}
                             {% with subject=course.subject %}
                             <div class="col-4">
-                                <div class="card shadow-sm">
+                                <div class="card shadow-sm my-3">
                                     <div class="card-header p-0">
                                         {% if course.photo %}
                                         <img src="{{ course.photo.url }}" class="card-img-top img-fluid" alt="{{ course.title }}">

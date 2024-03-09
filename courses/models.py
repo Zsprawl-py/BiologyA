@@ -20,10 +20,15 @@ class Team(models.Model):
     email = models.EmailField(blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     rule = models.CharField(choices=RULES, max_length=200, blank=True, null=True)
+    member_id = models.IntegerField(blank=True, null=True)
     # courses = models.ForeignKey(Course, related_name='instructor', on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ['member_id']
+
 
 class Subject(models.Model):
     title = models.CharField(max_length=200)
